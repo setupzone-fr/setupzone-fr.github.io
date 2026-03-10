@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SetupZone — Inspire ton espace gaming</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --card: #16161f;
+    --border: #2a2a3a;
+    --accent: #ff3c3c;
+    --accent2: #ff9900;
+    --glow: #ff3c3c33;
+    --text: #f0f0f5;
+    --muted: #888899;
+    --tag: #1e1e2e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 32px; height: 32px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.2s ease;
+    opacity: 0.6;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: white !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 4px;
+    font-weight: 600 !important;
+    transition: all 0.2s !important;
+  }
+  .nav-cta:hover { background: #ff5555 !important; color: white !important; transform: translateY(-1px); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 8rem 3rem 4rem;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 50%, rgba(255,60,60,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(255,153,0,0.05) 0%, transparent 60%);
+  }
+
+  .grid-lines {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,60,60,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,60,60,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content {
+    position: relative;
+    max-width: 700px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--tag);
+    border: 1px solid var(--border);
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .badge-dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(4rem, 10vw, 8rem);
+    line-height: 0.95;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+    position: relative;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 500px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    padding: 0.9rem 2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-primary:hover { background: #ff5555; transform: translateY(-2px); box-shadow: 0 8px 30px var(--glow); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    padding: 0.9rem 2rem;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 0.95rem;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    position: absolute;
+    right: 3rem;
+    bottom: 4rem;
+    display: flex;
+    gap: 2rem;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2.5rem;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Section styles */
+  section { padding: 6rem 3rem; }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 3rem;
+    max-width: 500px;
+  }
+
+  /* Setup Cards */
+  .setups-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .setup-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: none;
+  }
+  .setup-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(255,60,60,0.1);
+  }
+
+  .setup-img {
+    position: relative;
+    height: 240px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+  }
+
+  /* Simulated room setups with CSS */
+  .setup-room {
+    position: absolute; inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .room-1 {
+    background: linear-gradient(160deg, #0d0d1a 0%, #1a0a2e 50%, #0a0d1a 100%);
+  }
+  .room-2 {
+    background: linear-gradient(160deg, #0a1a0a 0%, #0d2010 50%, #0a150a 100%);
+  }
+  .room-3 {
+    background: linear-gradient(160deg, #1a0a0a 0%, #2a0a0a 50%, #150505 100%);
+  }
+
+  .desk-setup {
+    width: 100%;
+    height: 160px;
+    position: relative;
+  }
+
+  /* Desk surface */
+  .desk-surface {
+    position: absolute;
+    bottom: 30px;
+    left: 10%;
+    right: 10%;
+    height: 8px;
+    background: linear-gradient(180deg, #3a2e24, #2a1e14);
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+
+  /* Monitor */
+  .monitor {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 75px;
+    background: #111;
+    border: 2px solid #333;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .monitor-screen {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #001a4d, #003080, #001a4d);
+    position: relative;
+    overflow: hidden;
+  }
+  .monitor-screen.green {
+    background: linear-gradient(135deg, #001a00, #003000, #001a00);
+  }
+  .monitor-screen.red {
+    background: linear-gradient(135deg, #1a0000, #300000, #1a0000);
+  }
+  .screen-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(100,150,255,0.3), transparent 70%);
+  }
+  .screen-glow.green {
+    background: radial-gradient(ellipse at center, rgba(50,255,100,0.3), transparent 70%);
+  }
+  .screen-glow.red {
+    background: radial-gradient(ellipse at center, rgba(255,80,50,0.3), transparent 70%);
+  }
+  .monitor-stand {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 16px;
+    background: #222;
+  }
+  .monitor-base {
+    position: absolute;
+    bottom: 33px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 6px;
+    background: #222;
+    border-radius: 2px;
+  }
+
+  /* Keyboard */
+  .keyboard {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 22px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 3px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1px;
+    padding: 2px;
+    margin-bottom: 2px;
+  }
+  .key {
+    background: #2a2a2a;
+    border-radius: 1px;
+    height: 100%;
+  }
+  .key.lit { background: #4466ff; }
+  .key.lit.green { background: #44ff66; }
+  .key.lit.red { background: #ff4444; }
+
+  /* LED strips */
+  .led-strip {
+    position: absolute;
+    bottom: 27px;
+    left: 8%;
+    right: 8%;
+    height: 3px;
+    background: linear-gradient(90deg, #ff0040, #ff8800, #ffff00, #00ff88, #0088ff, #8800ff);
+    opacity: 0.7;
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(255,100,0,0.5);
+    animation: ledShift 3s linear infinite;
+  }
+
+  @keyframes ledShift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+  }
+
+  /* Mouse */
+  .mouse {
+    position: absolute;
+    bottom: 39px;
+    right: 22%;
+    width: 16px;
+    height: 22px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px 8px 5px 5px;
+  }
+  .mouse-line {
+    width: 1px;
+    height: 8px;
+    background: #444;
+    margin: 3px auto;
+  }
+
+  /* Headset */
+  .headset {
+    position: absolute;
+    bottom: 48px;
+    right: 14%;
+    width: 20px;
+    height: 28px;
+    border: 2px solid #444;
+    border-radius: 50% 50% 0 0;
+    border-bottom: none;
+  }
+  .headset::before, .headset::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    width: 7px;
+    height: 7px;
+    background: #555;
+    border-radius: 2px;
+  }
+  .headset::before { left: -3px; }
+  .headset::after { right: -3px; }
+
+  /* Ambient light on wall */
+  .wall-glow {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 60%;
+    background: radial-gradient(ellipse at 50% 0%, rgba(60,100,255,0.15), transparent 70%);
+  }
+  .wall-glow.green {
+    background: radial-gradient(ellipse at 50% 0%, rgba(50,200,80,0.12), transparent 70%);
+  }
+  .wall-glow.red {
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,60,30,0.12), transparent 70%);
+  }
+
+  /* Setup card content */
+  .setup-info {
+    padding: 1.2rem 1.5rem 1rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .setup-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+  }
+
+  .setup-tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    background: var(--tag);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .setup-price-range {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent2);
+    white-space: nowrap;
+    text-align: right;
+  }
+  .setup-price-range small {
+    display: block;
+    color: var(--muted);
+    font-size: 0.65rem;
+  }
+
+  /* Products in setup */
+  .setup-products {
+    padding: 0 1.5rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.5rem;
+  }
+
+  .products-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: 'Space Mono', monospace;
+    padding: 0.8rem 0 0.6rem;
+  }
+
+  .products-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .product-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 0.8rem;
+    background: var(--surface);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .product-item:hover {
+    border-color: var(--accent);
+    background: rgba(255,60,60,0.04);
+  }
+
+  .product-left {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .product-icon {
+    width: 28px; height: 28px;
+    background: var(--tag);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+  }
+
+  .product-name {
+    font-size: 0.82rem;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.1rem;
+  }
+
+  .product-store {
+    font-size: 0.68rem;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .product-price {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent2);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .product-price-badge {
+    background: rgba(255,153,0,0.1);
+    border: 1px solid rgba(255,153,0,0.2);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .shop-arrow {
+    color: var(--accent);
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
+
+  /* How it works */
+  .how-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .how-card {
+    position: relative;
+    padding: 2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: all 0.3s;
+  }
+  .how-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+
+  .how-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 5rem;
+    color: var(--accent);
+    opacity: 0.08;
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    line-height: 1;
+  }
+
+  .how-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .how-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+
+  .how-text {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* Categories bar */
+  .categories-bar {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .cat-btn {
+    background: var(--tag);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.8rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    font-family: 'Space Mono', monospace;
+    cursor: none;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .cat-btn:hover, .cat-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 3rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2rem;
+    letter-spacing: 3px;
+    margin-bottom: 1rem;
+  }
+
+  .footer-text {
+    color: var(--muted);
+    font-size: 0.82rem;
+    line-height: 1.7;
+    max-width: 500px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .footer-disclaimer {
+    color: var(--border);
+    font-size: 0.72rem;
+    font-family: 'Space Mono', monospace;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Ticker */
+  .ticker {
+    background: var(--accent);
+    padding: 0.5rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ticker-inner {
+    display: inline-block;
+    animation: ticker 20s linear infinite;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  @keyframes ticker {
+    from { transform: translateX(100vw); }
+    to { transform: translateX(-100%); }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Nav -->
+<nav>
+  <div class="logo">Setup<span>Zone</span></div>
+  <ul class="nav-links">
+    <li><a href="#">Setups</a></li>
+    <li><a href="#">Catégories</a></li>
+    <li><a href="#">Budget Guide</a></li>
+    <li><a href="#" class="nav-cta">⚡ Deals du jour</a></li>
+  </ul>
+</nav>
+
+<!-- Ticker -->
+<div class="ticker" style="margin-top: 64px;">
+  <span class="ticker-inner">
+    🔥 NOUVEAU SETUP "NEON SAMURAI" AJOUTÉ &nbsp;•&nbsp; 💸 ACCESSOIRES À PARTIR DE 3€ &nbsp;•&nbsp; 🎮 SETUP BUDGET < 100€ DISPONIBLE &nbsp;•&nbsp; ⚡ LIVRAISON GRATUITE SUR TEMU &nbsp;•&nbsp;
+    🔥 NOUVEAU SETUP "NEON SAMURAI" AJOUTÉ &nbsp;•&nbsp; 💸 ACCESSOIRES À PARTIR DE 3€ &nbsp;•&nbsp; 🎮 SETUP BUDGET < 100€ DISPONIBLE &nbsp;•&nbsp; ⚡ LIVRAISON GRATUITE SUR TEMU &nbsp;•&nbsp;
+  </span>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-lines"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="badge-dot"></span>Setups curatés à petit budget</div>
+    <h1>Transforme<br>ton <em>espace</em><br>gaming.</h1>
+    <p class="hero-sub">Des setups gaming & déco inspirants avec tous les accessoires référencés — retrouve chaque produit directement chez Temu, Amazon ou AliExpress.</p>
+    <div class="hero-btns">
+      <a href="#setups" class="btn-primary">🎮 Voir les setups</a>
+      <a href="#how" class="btn-secondary">Comment ça marche?</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">47</span>
+      <span class="stat-label">Setups</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">230+</span>
+      <span class="stat-label">Produits</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">3€</span>
+      <span class="stat-label">Prix min</span>
+    </div>
+  </div>
+</section>
+
+<!-- Setups Section -->
+<section id="setups">
+  <div class="section-label">Inspiration</div>
+  <h2 class="section-title">Setups du moment</h2>
+  <p class="section-sub">Clique sur un produit pour le retrouver en ligne.</p>
+
+  <!-- Category filter -->
+  <div class="categories-bar">
+    <button class="cat-btn active">Tous</button>
+    <button class="cat-btn">Budget < 100€</button>
+    <button class="cat-btn">RGB Maximal</button>
+    <button class="cat-btn">Minimaliste</button>
+    <button class="cat-btn">Streaming</button>
+    <button class="cat-btn">Cozy Déco</button>
+  </div>
+
+  <div class="setups-grid">
+
+    <!-- Setup 1 -->
+    <div class="setup-card">
+      <div class="setup-img">
+        <div class="setup-room room-1">
+          <div class="wall-glow"></div>
+          <div class="desk-setup">
+            <div class="monitor">
+              <div class="monitor-screen">
+                <div class="screen-glow"></div>
+              </div>
+            </div>
+            <div class="monitor-stand"></div>
+            <div class="monitor-base"></div>
+            <div class="desk-surface"></div>
+            <div class="keyboard">
+              <div class="key lit"></div><div class="key lit"></div><div class="key lit"></div>
+              <div class="key"></div><div class="key lit"></div><div class="key"></div>
+              <div class="key lit"></div><div class="key"></div><div class="key lit"></div>
+              <div class="key lit"></div><div class="key"></div><div class="key lit"></div>
+            </div>
+            <div class="mouse"></div>
+            <div class="headset"></div>
+            <div class="led-strip"></div>
+          </div>
+        </div>
+      </div>
+      <div class="setup-info">
+        <div>
+          <div class="setup-title">Blue Void Setup</div>
+          <div class="setup-tags">
+            <span class="tag">RGB</span>
+            <span class="tag">Budget</span>
+            <span class="tag">Débutant</span>
+          </div>
+        </div>
+        <div class="setup-price-range">
+          <span>~65€</span>
+          <small>total setup</small>
+        </div>
+      </div>
+      <div class="setup-products">
+        <div class="products-label">🛒 Produits dans ce setup</div>
+        <div class="products-list">
+          <a href="#" class="product-item">
+            <div class="product-left">
+              <div class="product-icon">⌨️</div>
+              <div>
+                <span class="product-name">Clavier RGB Mécanique TKL</span>
+                <span class="product-store">Temu</span>
+              </div>
+            </div>
+            <div class="product-price">
+              <span class="product-price-badge">18€</span>
+              <span class="shop-arrow">→</span>
+            </div>
+          </a>
+          <a href="#" class="product-item">
+            <div class="product-left">
+              <div class="product-icon">🖱️</div>
+              <div>
+                <span class="product-name">Souris Gaming RGB 7200 DPI</span>
+                <span class="product-store">Temu</span>
+              </div>
+            </div>
+            <div class="product-price">
+              <span class="product-price-badge">9€</span>
+              <span class="shop-arrow">→</span>
+            </div>
+          </a>
+          <a href="#" class="product-item">
+            <div class="product-left">
+              <div class="product-icon">💡</div>
+              <div>
+                <span class="product-name">Bande LED USB 2m RGB</span>
+                <span class="product-store">Temu</span>
+              </div>
+            </div>
+            <div class="product-price">
+              <span class="product-price-badge">6€</span>
+              <span class="shop-arrow">→</span>
+            </div>
+          </a>
+          <a href="#" class="product-item">
+            <div class="product-left">
+              <div class="product-icon">🎧</div>
+              <div>
+                <span class="product-name">Casque Gaming Stéréo + Micro</span>
+                <span class="product-store">AliExpress</span>
+              </div>
+            </div>
+            <div class="product-price">
+              <span class="product-price-badge">14€</span>
+              <span class="shop-arrow">→</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Setup 2 -->
+    <div class="setup-card">
+      <div class="setup-img">
+        <div class="setup-room room-2">
+          <div class="wall-glow green"></div>
+          <div class="desk-setup">
+            <div class="monitor">
+              <div class="monitor-screen green">
+                <div class="screen-glow green"></div>
+              </div>
+            </div>
+            <div class="monitor-stand"></div>
+            <div class="monitor-base"></div>
+            <div class="desk-surface"></div>
+            <div class="keyboard">
+              <div class="key lit green"></div><div class="key"></div><div class="key lit green"></div>
+              <div class="key lit green"></div><div class="key"></div><div class="key lit green"></div>
+              <div class="key"></div><div class="key lit green"></div><div class="key"></div>
+              <div class="key lit green"></div><div class="key lit green"></div><div class="key"></div>
+            </div>
+            <div class="mouse"></div>
+            <div class="led-strip"></div>
+          </div>
+        </div>
+      </div>
+      <div class="setup-info">
+        <div>
+          <div class="setup-title">Forest Hacker</div>
+          <div class="setup-tags">
+            <span class="tag">Vert</span>
+            <span class="tag">Minimaliste</span>
+            <span class="tag">Streamer</span>
+          </div>
+        </div>
+        <div class="setup-price-range">
+          <span>~120€</span>
+          <small>total setup</small>
+        </div>
+      </div>
+      <div class="setup-products">
+        <div class="products-label">🛒 Produits dans ce setup</div>
+        <div class="products-list">
+          <a href="#" class="product-item">
+            <div class="product-left">
+              <div class="product-icon">🖥️</div>
+              <div>
+                <span class="product-name">Bras support moniteur réglable</span>
+                <span class="product-store">Amazon</span>
+              </div>
+            </div>
+            <div class="product-price">
+              <span class="product-price-badge">22€</span>
+              <span class="shop-arrow">→</span>
+            </div>
+          </a>
+          <a href="#" class="product-item">
+            <div class="product-left">
+              <div class="product-icon">🎙️</div>
+              <div>
+                <span class="product-name">Micro USB Condensateur + Support</span>
+                <span class="product-store">Temu</span>
+              </div>
+            </div>
+            <div class="product-price">
+              <span class="product-price-badge">25€</span>
+              <span class="shop-arrow">→</span>
+            </div>
+          </a>
+          <a href="#" class="product-item">
+            <div class="product-left">
+              <div class="product-icon">🌿</div>
+              <div>
+                <span class="product-name">Plante artificielle déco bureau</span>
+                <span class="product-store">Temu</span>
+              </div>
+            </div>
+            <div class="product-price">
+              <span class="product-price-badge">4€</span>
+              <span class="shop-arrow">→</span>
+            </div>
+          </a>
+          <a href="#" class="product-item">
+            <div class="product-left">
+              <div class="product-icon">📷</div>
+              <div>
+                <span class="product-name">Webcam Full HD 1080p</span>
+                <span class="product-store">AliExpress</span>
+              </div>
+            </div>
+            <div class="product-price">
+              <span class="product-price-badge">28€</span>
+              <span class="shop-arrow">→</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Setup 3 -->
+    <div class="setup-card">
+      <div class="setup-img">
+        <div class="setup-room room-3">
+          <div class="wall-glow red"></div>
+          <div class="desk-setup">
+            <div class="monitor">
+              <div class="monitor-screen red">
+                <div class="screen-glow red"></div>
+              </div>
+            </div>
+            <div class="monitor-stand"></div>
+            <div class="monitor-base"></div>
+            <div class="desk-surface"></div>
+            <div class="keyboard">
+              <div class="key lit red"></div><div class="key lit red"></div><div class="key"></div>
+              <div class="key"></div><div class="key lit red"></div><div class="key lit red"></div>
+              <div class="key lit red"></div><div class="key"></div><div class="key"></div>
+              <div class="key lit red"></div><div class="key lit red"></div><div class="key lit red"></div>
+            </div>
+            <div class="mouse"></div>
+            <div class="headset"></div>
+            <div class="led-strip"></div>
+          </div>
+        </div>
+      </div>
+      <div class="setup-info">
+        <div>
+          <div class="setup-title">Neon Samurai</div>
+          <div class="setup-tags">
+            <span class="tag">Rouge</span>
+            <span class="tag">Hardcore</span>
+            <span class="tag">RGB max</span>
+          </div>
+        </div>
+        <div class="setup-price-range">
+          <span>~85€</span>
+          <small>total setup</small>
+        </div>
+      </div>
+      <div class="setup-products">
+        <div class="products-label">🛒 Produits dans ce setup</div>
+        <div class="products-list">
+          <a href="#" class="product-item">
+            <div class="product-left">
+              <div class="product-icon">🖱️</div>
+              <div>
+                <span class="product-name">Grand tapis de souris RGB XL</span>
+                <span class="product-store">Temu</span>
+              </div>
+            </div>
+            <div class="product-price">
+              <span class="product-price-badge">12€</span>
+              <span class="shop-arrow">→</span>
+            </div>
+          </a>
+          <a href="#" class="product-item">
+            <div class="product-left">
+              <div class="product-icon">💺</div>
+              <div>
+                <span class="product-name">Support casque gaming acier</span>
+                <span class="product-store">Amazon</span>
+              </div>
+            </div>
+            <div class="product-price">
+              <span class="product-price-badge">15€</span>
+              <span class="shop-arrow">→</span>
+            </div>
+          </a>
+          <a href="#" class="product-item">
+            <div class="product-left">
+              <div class="product-icon">🔴</div>
+              <div>
+                <span class="product-name">Panneaux LED Hexagonaux x6</span>
+                <span class="product-store">Temu</span>
+              </div>
+            </div>
+            <div class="product-price">
+              <span class="product-price-badge">32€</span>
+              <span class="shop-arrow">→</span>
+            </div>
+          </a>
+          <a href="#" class="product-item">
+            <div class="product-left">
+              <div class="product-icon">🏆</div>
+              <div>
+                <span class="product-name">Figurine déco gaming neon</span>
+                <span class="product-store">Shein</span>
+              </div>
+            </div>
+            <div class="product-price">
+              <span class="product-price-badge">8€</span>
+              <span class="shop-arrow">→</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- How it works -->
+<section id="how" class="how-section">
+  <div class="section-label">Le concept</div>
+  <h2 class="section-title">Comment ça marche</h2>
+  <p class="section-sub">SetupZone trouve les meilleurs produits pour toi, sans te ruiner.</p>
+  <div class="how-grid">
+    <div class="how-card">
+      <span class="how-num">1</span>
+      <div class="how-icon">🔍</div>
+      <div class="how-title">Inspire-toi</div>
+      <p class="how-text">Browse des dizaines de setups gaming et déco soigneusement sélectionnés pour tous les budgets.</p>
+    </div>
+    <div class="how-card">
+      <span class="how-num">2</span>
+      <div class="how-icon">🛒</div>
+      <div class="how-title">Clique & achète</div>
+      <p class="how-text">Chaque accessoire visible dans un setup est listé avec son lien direct vers Temu, Amazon ou AliExpress.</p>
+    </div>
+    <div class="how-card">
+      <span class="how-num">3</span>
+      <div class="how-icon">🎮</div>
+      <div class="how-title">Build ton setup</div>
+      <p class="how-text">Reçois tes accessoires et crée ton espace de jeu parfait. Partage le résultat avec la communauté !</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">Setup<span style="color: var(--accent)">Zone</span></div>
+  <p class="footer-text">SetupZone est un site de curation indépendant. Nous sélectionnons les meilleurs produits gaming et déco disponibles à petit prix.</p>
+  <p class="footer-disclaimer">* Les liens vers les boutiques sont des liens affiliés. SetupZone peut percevoir une commission si vous effectuez un achat, sans coût supplémentaire pour vous. Les prix sont indicatifs et peuvent varier.</p>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // Category filter
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.animation = 'fadeUp 0.6s ease both';
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.setup-card, .how-card').forEach(el => {
+    el.style.opacity = '0';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
